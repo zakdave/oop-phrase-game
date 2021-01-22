@@ -15,7 +15,7 @@ class Phrase {
         for (let letter of this.phrase) {
             let insertStr = ``;
             if (/\w/.test(letter)) {
-                insertStr += `<li class="hide letter ${letter}">Z</li>`;
+                insertStr += `<li class="hide letter ${letter}">${letter}</li>`;
             } else {
                 insertStr += `<li class="space"> </li>`;
             }
@@ -24,14 +24,33 @@ class Phrase {
     }
 
     /**
-     * checks to see if letter selected by player matches a letter in phrase
+     * Checks to see if letter selected by player matches a letter in phrase
+     * @param {String} letter - Text content of clicked letter button
+     * @return {Boolean} - T/F if letter is present in phrase
      */
-    checkLetter() {}
+    checkLetter(letter) {
+        return this.phrase.includes(letter);
+    }
 
     /**
      * Reveals location of letters on the board that match players selection
+     * @param {String} letter - Text content of clicked letter button
      */
-    showMatchedLetter() {}
+    showMatchedLetter(letter) {
+        const phraseCharacters = document.querySelectorAll('#phrase .letter');
+
+        for (let i = 0; i < phraseCharacters.length; i++) {
+            if (letter === phraseCharacters[i].textContent) {
+                phraseCharacters[i].classList.remove('hide');
+                phraseCharacters[i].classList.add('show');
+            }
+        }
+
+        
+            //.classList.remove('hide');
+            //.classList.add('show');
+        
+    }
 
 }
  

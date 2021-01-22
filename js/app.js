@@ -19,8 +19,6 @@ startButton.addEventListener('click', e => {
  * Event listener for on screen keyboard
  */
 keyboardButtonDisplay.addEventListener('click', e => {
-    const target = e.target;
-    game.handleInteraction(target);
-    console.log(target);
-    console.log(target.textContent);
+    game.handleInteraction(e.target);
+
 });

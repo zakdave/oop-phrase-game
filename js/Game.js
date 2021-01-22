@@ -48,17 +48,31 @@ class Game {
      * Checks if button clicked by player matches letter in phrase
      * and calls appropriate methods (checkLetter, removeLife(), showMatchedLetter()
      * and checkForWin())
-     * @param {HTMLButtonElement} letter - Button element targeted by user
+     * @param {HTMLButtonElement} key - Button element targeted by user (e.target)
      */
-    handleInteraction(letter){
-        letter.disabled = true;
+    handleInteraction(key) {
+        const letter = key.textContent;
+        
+        key.disabled = true;
+        
+        if (this.activePhrase.checkLetter(letter)) {
+            this.activePhrase.showMatchedLetter(letter);
+        } else {
+            this.removeLife();
+        }
+        
+
+        console.log(key, letter);
+        console.log(this.activePhrase.checkLetter(letter));
     }
 
     /**
      * Removes a life from scoreboard, replaces image in DOM
      * calls gameOver appropriately
      */
-    removeLife() {}
+    removeLife() {
+        this.missed ++;
+    }
 
     /**
      * Checks to see if player has revealed all of the letters
