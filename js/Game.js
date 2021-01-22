@@ -55,15 +55,14 @@ class Game {
         
         key.disabled = true;
         
-        if (this.activePhrase.checkLetter(letter)) {
-            this.activePhrase.showMatchedLetter(letter);
-        } else {
-            this.removeLife();
+        if (key.type === 'submit') { 
+            // key.type === 'submit' -- Branch added to ensure button click is on button
+            if (this.activePhrase.checkLetter(letter)) {
+                this.activePhrase.showMatchedLetter(letter);
+            } else {
+                this.removeLife();
+            }
         }
-        
-
-        console.log(key, letter);
-        console.log(this.activePhrase.checkLetter(letter));
     }
 
     /**
@@ -71,7 +70,14 @@ class Game {
      * calls gameOver appropriately
      */
     removeLife() {
-        this.missed ++;
+        this.missed++;
+
+        const activeHeart = document.querySelector('[src="images/liveHeart.png"]');
+        activeHeart.setAttribute('src', 'images/lostHeart.png');
+        
+        if (this.missed > 4) {
+            this.gameOver();
+        }
     }
 
     /**
@@ -83,4 +89,7 @@ class Game {
      * displays start screen overlay, changes h1 to display win or 
      * loss message
      */
+    gameOver() {
+        console.log('game over nerd, rekt');
+    }
 }

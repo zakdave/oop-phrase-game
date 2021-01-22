@@ -37,20 +37,13 @@ class Phrase {
      * @param {String} letter - Text content of clicked letter button
      */
     showMatchedLetter(letter) {
-        const phraseCharacters = document.querySelectorAll('#phrase .letter');
-
-        for (let i = 0; i < phraseCharacters.length; i++) {
-            if (letter === phraseCharacters[i].textContent) {
-                phraseCharacters[i].classList.remove('hide');
-                phraseCharacters[i].classList.add('show');
+        //iterate over node list of letters (excludes spaces)
+        for (let i of document.querySelectorAll('#phrase .letter')) {
+            if (i.textContent === letter) {
+                i.classList.remove('hide');
+                i.classList.add('show');
             }
         }
-
-        
-            //.classList.remove('hide');
-            //.classList.add('show');
-        
     }
-
 }
  
