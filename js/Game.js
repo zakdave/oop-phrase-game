@@ -6,7 +6,7 @@ class Game {
     constructor () {
         this.missed = 0;
         this.phrases = this.phraseArrObjs();
-        this.activePhrase = null; // use start game method to set active phrase
+        this.activePhrase = null;
 
     }
 
@@ -63,6 +63,7 @@ class Game {
                 this.removeLife();
             }
         }
+        this.checkForWin();
     }
 
     /**
@@ -83,7 +84,14 @@ class Game {
     /**
      * Checks to see if player has revealed all of the letters
      */
-    checkForWin() {}
+    checkForWin() {
+        const letterElements = document.querySelectorAll('#phrase .letter');
+        
+    
+
+        
+    }
+
 
     /**
      * displays start screen overlay, changes h1 to display win or 
