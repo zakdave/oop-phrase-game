@@ -53,12 +53,15 @@ class Game {
     handleInteraction(key) {
         const letter = key.textContent;
         key.disabled = true;
-        
+        console.log(key)
+
         if (key.type === 'submit') { 
             // key.type === 'submit' -- Branch added to ensure button click is on button
             if (this.activePhrase.checkLetter(letter)) {
+                key.classList.add('chosen');
                 this.activePhrase.showMatchedLetter(letter);
             } else {
+                key.classList.add('wrong');
                 this.removeLife();
             }
         }
@@ -120,9 +123,13 @@ class Game {
         
         
 
-        //re-enable buttons
+        //re-enable buttons and clear wrong and chosen classes
         const keyboardButtons = document.querySelectorAll('.key');
-        [...keyboardButtons].forEach(button => button.disabled = false);
+        [...keyboardButtons].forEach(button => {
+            button.disabled = false
+            button.classList.remove('wrong');
+            button.classList.remove('chosen');
+        });
 
         //reset hearts
         const hearts = document.querySelectorAll('[src="images/lostHeart.png"]');
