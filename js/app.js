@@ -20,5 +20,4 @@ startButton.addEventListener('click', e => {
  */
 keyboardButtonDisplay.addEventListener('click', e => {
     game.handleInteraction(e.target);
-
 });

@@ -65,6 +65,7 @@ class Game {
                 this.removeLife();
             }
         }
+        //check for end of game and call gameOver with appropriate boolean
         if (this.checkForWin()) {
             this.gameOver(true);
         }
@@ -95,7 +96,7 @@ class Game {
 
 
     /**
-     * displays start screen overlay, changes h1 to display win or 
+     * Displays start screen overlay, changes h1 to display win or 
      * loss message
      * @param {Boolean} bool - T/F if player has won
      */
@@ -121,8 +122,6 @@ class Game {
         const phraseList = document.querySelectorAll('#phrase ul li');
         [...phraseList].forEach(li => li.remove());
         
-        
-
         //re-enable buttons and clear wrong and chosen classes
         const keyboardButtons = document.querySelectorAll('.key');
         [...keyboardButtons].forEach(button => {
