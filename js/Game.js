@@ -16,10 +16,10 @@ class Game {
      */
     phraseArrObjs() {
         const phraseArr = [];
-        const phrases = ['The cow jumped over the moon',
-                        'Nothing worthwhile is easy',
+        const phrases = ['Just keep swimming',
+                        'Over nine thousand',
                         'Negative ghost rider',
-                        'His power far exceeds mine',
+                        'Milk was a bad choice',
                         'What goes around is all around'];
         
         for (let phrase of phrases) {
@@ -38,7 +38,7 @@ class Game {
     /**
      * Calls getRandomPhase, hides overlay, displays gameboard
      */
-    startGame(){
+    startGame() {
         this.activePhrase = this.getRandomPhrase();
         document.getElementById('overlay').style.display = 'none';
         this.activePhrase.addPhraseToDisplay(); 
@@ -52,7 +52,6 @@ class Game {
      */
     handleInteraction(key) {
         const letter = key.textContent;
-        
         key.disabled = true;
         
         if (key.type === 'submit') { 
@@ -63,9 +62,14 @@ class Game {
                 this.removeLife();
             }
         }
-        this.checkForWin();
+        if (this.checkForWin()) {
+            this.gameOver(true);
+        }
+        if (this.missed > 4) {
+            this.gameOver(false);
+        }
     }
-
+ 
     /**
      * Removes a life from scoreboard, replaces image in DOM
      * calls gameOver appropriately
@@ -76,9 +80,6 @@ class Game {
         const activeHeart = document.querySelector('[src="images/liveHeart.png"]');
         activeHeart.setAttribute('src', 'images/lostHeart.png');
         
-        if (this.missed > 4) {
-            this.gameOver();
-        }
     }
 
     /**
@@ -86,18 +87,48 @@ class Game {
      */
     checkForWin() {
         const letterElements = document.querySelectorAll('#phrase .letter');
-        
-    
-
-        
+        return [...letterElements].every(letter => letter.classList.contains('show'));  
     }
 
 
     /**
      * displays start screen overlay, changes h1 to display win or 
      * loss message
+     * @param {Boolean} bool - T/F if player has won
      */
-    gameOver() {
-        console.log('game over nerd, rekt');
+    gameOver(bool) {
+        const gameOverMessage = document.querySelector('#game-over-message');
+        const overlayDiv = document.querySelector('#overlay');
+
+        if (bool) {
+            gameOverMessage.innerHTML = 'You won!';
+            overlayDiv.classList.remove('start');
+            overlayDiv.classList.remove('lose');
+            overlayDiv.classList.add('win');
+            overlayDiv.style.display = 'block'; 
+        } else {
+            gameOverMessage.innerHTML = 'Boo! You Lost. Try again?';
+            overlayDiv.classList.remove('start');
+            overlayDiv.classList.remove('win');
+            overlayDiv.classList.add('lose');
+            overlayDiv.style.display = 'block';
+        }
+
+        //remove phrase by reassigning ul html to empty string
+        const phraseList = document.querySelectorAll('#phrase ul li');
+        [...phraseList].forEach(li => li.remove());
+        
+        
+
+        //re-enable buttons
+        const keyboardButtons = document.querySelectorAll('.key');
+        [...keyboardButtons].forEach(button => button.disabled = false);
+
+        //reset hearts
+        const hearts = document.querySelectorAll('[src="images/lostHeart.png"]');
+        [...hearts].forEach(heart => heart.setAttribute('src', 'images/liveHeart.png'));
+        
+        //reset missed
+        this.missed = 0;
     }
-}
+}    
